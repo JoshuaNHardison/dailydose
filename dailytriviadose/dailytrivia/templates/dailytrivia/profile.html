@@ -1,0 +1,38 @@
+{% extends "dailytrivia/layout.html" %}
+
+{% block body %}
+<h1>{{ profile_user.username }}'s Profile</h1>
+
+<h2>Game History</h2>
+<div class="container mt-4">
+<div class="row">
+{% if played_trivia_data %}
+{% for data in played_trivia_data %}
+<div class="col-md-4 mb-4">
+    <div class="card trivia-card">
+        <div class="card-color" style="background-color: {{ data.trivia.color }};">
+            <img class="card-image" src="{{ data.trivia.image }}" alt="Trivia Image">
+        </div>
+        <div class="card-footer">
+            <div class="footer-header">
+                <div class="title-section">
+                    <div class="title-section">
+                        <h5 class="card-title">{{ data.trivia.title }}</h5>
+                        <h6 class="card-streak">Current Streak: {{ data.streak }}</h6>
+                        <h6 class="card-streak">Best Streak: {{ data.best_streak }}</h6>
+                        <h6 class="card-streak">Attempts: {{ data.attempts }}</h6>
+                        <h6 class="card-streak">Wins: {{ data.wins }}</h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %}
+{% else %}
+<p>No games played yet.</p>
+{% endif %}
+</div>
+</div>
+
+{% endblock %}

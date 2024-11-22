@@ -1,0 +1,21 @@
+{% extends 'dailytrivia/layout.html' %}
+
+{% block body %}
+
+
+<div class="container mt-4">
+    <h1>{{ trivia.title }}</h1>
+    <p>{{ trivia.description }}</p>
+
+    {% if trivia.embed_code %}
+        <div class="embed-container">
+            {{ trivia.embed_code|safe }}
+        </div>
+    {% else %}
+        <a href="{{ trivia.url }}" class="btn btn-primary" target="_blank">Go to Game</a>
+    {% endif %}
+    <a href="{% url 'index' %}" class="btn btn-secondary mt-3"> Back to All Trivia</a>
+</div>
+
+
+{% endblock %}

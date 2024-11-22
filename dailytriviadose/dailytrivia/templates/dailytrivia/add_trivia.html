@@ -1,0 +1,32 @@
+{% extends "dailytrivia/layout.html" %}
+{% load static %}
+
+{% block body %}
+
+<div class="container mt-4">
+    <h2>Add New Trivia Game</h2>
+    <form method="POST" action="{% url 'add_trivia' %}">
+        {% csrf_token %}
+
+        <div class="form-group">
+            <label for="title">Title</label>
+            <input required class="form-control" type="text" name="title" id="title">
+        </div>
+        <div class="form-group">
+            <label for="description">Description</label>
+            <textarea required class="form-control" name="description" id="description" rows="3"></textarea>
+        </div>
+        <div class="form-group">
+            <label for="url">URL</label>
+            <input required type="url" class="form-control" id="url" name="url">
+        </div>
+        <div class="form-group">
+            <label for="reset_time">Reset Time</label>
+            <input type="time" class="form-control" id="reset_time" name="reset_time">
+        </div>
+
+        <button type="submit" class="btn btn-primary mt-3">Add Trivia</button>
+    </form>
+</div>
+
+{% endblock %}

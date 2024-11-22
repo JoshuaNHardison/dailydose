@@ -1,0 +1,388 @@
+.background {
+    background-image: radial-gradient(#020341, #404161);
+    /* background-color: #020341; */
+}
+body {
+    font-family: 'Nunito', sans-serif;
+}
+.bold {
+    font-weight: bold;
+}
+.alt-font {
+    font-family: "Lilita One", sans-serif;
+}
+
+/*                        */
+/*         navbar         */
+/*                        */
+.navbar {
+    padding: 0.75rem 1.5rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-bottom: 3px solid #424375;
+}
+
+.navbar-brand {
+    margin-right: auto;
+    color: #020341;
+    font-size: larger;
+    font-weight: bolder;
+    text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+    transition: color 0.3s ease;
+}
+.navbar-brand:hover {
+    color: #424375;
+}
+
+.navbar-nav .nav-item .nav-link {
+    color: #020341;
+    font-size: medium;
+    padding: 0.5rem 1rem;
+    transition: color 0.3s ease, transform 0.2 ease;
+    position: relative;
+}
+
+.navbar-nav .nav-item .nav-link:hover {
+    color: #424375;
+    transform: scale(1.05);
+    text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.navbar-nav .nav-item.active .nav-link{
+    color: #424375;
+    font-weight: bold;
+}
+
+.navbar-nav .nav-item .nav-link::after {
+    content: '';
+    display: block;
+    width: 0;
+    height: 2px;
+    background: #424375;
+    transition: width 0.3s ease;
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+}
+
+.navbar-nav .nav-item .nav-link:hover::after {
+    width: 100%;
+}
+
+
+
+.card-color {
+    position: relative;
+    max-height: 25vh;
+    height: 20vh;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.card-color .bookmark {
+    position: absolute;
+    top: 0%;
+    right: 0%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+}
+
+.card-color .bookmark svg {
+    width: 100px;
+    height: 100px;
+    fill: #fff;
+}
+
+.card-color .bookmark svg:hover {
+    fill: red;
+}
+
+/* Image in the middle */
+.card-color .card-image {
+    max-height: 120px;
+    object-fit: cover;
+}
+
+/* Footer */
+.card-footer {
+    max-height: 30vh;
+    padding: 15px;
+    background-color: #fff;
+    border-top: 1px solid #e0e0e0;
+    justify-content: space-between;
+    flex-grow: 1;
+}
+
+.card-footer h5.card-title {
+    margin-bottom: 10px;
+}
+
+.footer-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.card-text {
+    margin-top: 10px;
+    font-size: 14px;
+    color: #555;
+}
+
+
+
+
+/*                        */
+/*        welcome         */
+/*                        */
+.welcomeBackground {
+    background-color: #020341;
+    max-height: 80vh;
+    height: 80vh;
+}
+.welcomeHeader {
+    display: flex;
+    justify-content: center;
+    padding-top: 5vh;
+    color: aliceblue;
+    max-height: 25vh;
+}
+
+.header-title {
+    font-size: 4rem;
+}
+
+#header-greeting {
+    display: block;
+    text-align: center;
+}
+
+.welcomeText {
+    margin-left: 20%;
+    margin-right: 20%;
+    text-align: center;
+}
+
+.welcomeText h3 {
+    color: #a8afb3;
+}
+
+.welcomeRow {
+    display: flex;
+    justify-content: center;
+    gap: 50px;
+    margin: 20px 0;
+    max-height: 60vh;
+    padding-bottom: 5vh;
+}
+
+.small-card {
+    max-width: 25vw;
+}
+
+.big-card {
+    max-width: 50vw;
+    width: 30vw;
+}
+
+.login {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #4CAF50; /* Button color */
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.login:hover {
+    background-color: #45a049; /* Hover color */
+    text-decoration: none;
+}
+
+
+
+/*                        */
+/*       bookmark         */
+/*                        */
+
+.bookmark {
+    --default: #D1D6EE;
+    --active: #F74236;
+    --size: 64px;
+    -webkit-tap-highlight-color: transparent;
+    outline: none;
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 0;
+    cursor: pointer;
+    svg {
+        display: block;
+        width: var(--size);
+        height: var(--size);
+        fill: var(--fill, var(--default));
+        transition: fill .3s linear;
+        transform: translateZ(0);
+    }
+    &.active {
+        --fill: var(--active);
+    }
+}
+
+html {
+    box-sizing: border-box;
+    -webkit-font-smoothing: antialiased;
+}
+
+/*                        */
+/*         card           */
+/*                        */
+.card{
+    height: 50vh;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s;
+    overflow: hidden;
+    display: flex;
+    box-sizing: border-box;
+}
+
+.card:hover{
+    transform: translateY(-5px);
+    cursor: pointer;
+}
+
+.card-body {
+    border-radius: 4px;
+    /* background-image: linear-gradient(#DAD2D8, transparent)  */
+    
+}
+
+.title-section{
+    display: flex;
+    flex-direction: column;
+}
+
+.card-title {
+    margin: 0;
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.footer-status{
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.supported, .unsupported {
+    font-size: small;
+    font-weight: bold;
+    margin-left: 10px;
+    text-align: right;
+}
+
+.supported {
+    color: green;
+}
+.unsupported {
+    color: orange;
+}
+.played-status {
+    font-size: x-small;
+    margin-left: 10px;
+    text-align: right;
+    color: gray;
+}
+
+/*                        */
+/*          modal         */
+/*                        */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1000; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgba(0, 0, 0, 0.5); /* Black background with opacity */
+
+}
+
+.modal-content {    
+    background-color: #fff;
+    margin: 15% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%; /* Could be more or less, depending on screen size */
+    max-width: 1200px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    transform: translate(0%, -35%);
+}
+
+#confirmation-content{
+    width: fit-content;
+}
+
+/* Close Button */
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+#confirmClose {
+    width: fit-content;
+}
+
+@media (max-width: 1000px) {
+    .modal-content{
+        top: 0px;
+        width: 90%;
+        margin: 10% auto;
+        padding: 15px;
+        bottom: 0;
+        height: 80%;
+        transform: none;
+    }
+    #modalIframe {
+        height: 100%;
+    }
+    .welcomeBackground {
+        max-height: auto;
+        height: auto;
+    }
+    .card-color .card-image {
+        max-height: 90px;
+    }
+    .card{
+        max-height: 20vh;
+    }
+    .card-color {
+        max-height: 10vh;
+    }
+    .card-footer {
+        max-height: 10vh;
+    }
+}

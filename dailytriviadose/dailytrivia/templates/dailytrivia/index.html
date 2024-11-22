@@ -1,0 +1,237 @@
+{% extends "dailytrivia/layout.html" %}
+{% load static %}
+
+{% block body %}
+
+<div class="welcomeBackground">
+    {% if user.is_authenticated %}
+
+    <div class="welcomeHeader" id="header-greeting">
+        <h5>Your one-stop shop for all daily trivia games on the web.</h5>
+        
+        <h1 class="header-title"> Need your <span class="alt-font">Daily Dose of Trivia</span>, {{ request.user }}?</h1>
+    </div>
+    <!-- <div class="welcomeHeader">
+        <h1>Need your Daily Dose of Trivia, {{ request.user }}?</h1>
+    </div> -->
+
+    {% if top_3_trivia %}
+    <div class="welcomeRow">
+        <div class="card small-card trivia-card" data-link="{{ top_3_trivia.1.trivia.url }}" data-trivia-id="{{ top_3_trivia.1.trivia.id }}"
+        data-played="{% if not top_3_trivia.1.eligible_to_play %}true{% else %}false{% endif %}"
+        data-embed="{% if top_3_trivia.1.trivia.embed_code %}true{% else %}false{% endif %}">
+            <!-- Header -->
+            <div class="card-color" style="background-color: {{ top_3_trivia.1.trivia.color }};">
+                <img class="card-image" src="{{ top_3_trivia.1.trivia.image }}" alt="Trivia Image">
+            </div>
+            <div class="card-footer">
+                <div class="footer-header">
+                    <div class="title-section">
+                        <h5 class="card-title">{{ top_3_trivia.1.trivia.title }}</h5>
+                        {% if top_3_trivia.1.streak > 1 %}
+                            <h6 class="card-streak">Streak: {{ top_3_trivia.1.streak }}</h6>
+                        {% endif %}
+                    </div>
+                    <div class="footer-status">
+                        {% if top_3_trivia.1.trivia.allow_embed %}
+                            <span class="supported">Fully supported</span>
+                        {% else %}
+                            <span class="unsupported">Not supported</span>
+                        {% endif %}
+                        {% if not top_3_trivia.1.eligible_to_play %}
+                            <span class="played-status" id="playedStatus-{{ top_3_trivia.1.trivia.id }}">Already Played Today</span>
+                        {% endif %}
+                        <span class="played-status" id="playedStatus-{{ top_3_trivia.1.trivia.id }}"></span>
+                    </div>
+                </div>
+                <p class="card-text">{{ top_3_trivia.1.trivia.description|truncatewords:20 }}</p>
+            </div>
+        </div>
+
+        <div class="card big-card trivia-card" data-link="{{ top_3_trivia.0.trivia.url }}" data-trivia-id="{{ top_3_trivia.0.trivia.id }}"
+        data-played="{% if not top_3_trivia.0.eligible_to_play %}true{% else %}false{% endif %}"
+        data-embed="{% if top_3_trivia.0.trivia.embed_code %}true{% else %}false{% endif %}">
+            <!-- Header -->
+            <div class="card-color" style="background-color: {{ top_3_trivia.0.trivia.color }};">
+                <img class="card-image" src="{{ top_3_trivia.0.trivia.image }}" alt="Trivia Image">
+            </div>
+            <div class="card-footer">
+                <div class="footer-header">
+                    <div class="title-section">
+                        <h5 class="card-title">{{ top_3_trivia.0.trivia.title }}</h5>
+                        {% if top_3_trivia.1.streak > 1 %}
+                            <h6 class="card-streak">Streak: {{ top_3_trivia.0.streak }}</h6>
+                        {% endif %}
+                    </div>
+                    <div class="footer-status">
+                        {% if top_3_trivia.0.trivia.allow_embed %}
+                            <span class="supported">Fully supported</span>
+                        {% else %}
+                            <span class="unsupported">Not supported</span>
+                        {% endif %}
+                        {% if not top_3_trivia.0.eligible_to_play %}
+                            <span class="played-status" id="playedStatus-{{ top_3_trivia.0.trivia.id }}">Already Played Today</span>
+                        {% endif %}
+                        <span class="played-status" id="playedStatus-{{ top_3_trivia.0.trivia.id }}"></span>
+                    </div>
+                </div>
+                <p class="card-text">{{ top_3_trivia.0.trivia.description|truncatewords:20 }}</p>
+            </div>
+        </div>
+
+        <div class="card small-card trivia-card" data-link="{{ top_3_trivia.2.trivia.url }}" data-trivia-id="{{ top_3_trivia.2.trivia.id }}"
+        data-played="{% if not top_3_trivia.2.eligible_to_play %}true{% else %}false{% endif %}"
+        data-embed="{% if top_3_trivia.2.trivia.embed_code %}true{% else %}false{% endif %}">
+            <!-- Header -->
+            <div class="card-color" style="background-color: {{ top_3_trivia.2.trivia.color }};">
+                <img class="card-image" src="{{ top_3_trivia.2.trivia.image }}" alt="Trivia Image">
+            </div>
+            <div class="card-footer">
+                <div class="footer-header">
+                    <div class="title-section">
+                        <h5 class="card-title">{{ top_3_trivia.2.trivia.title }}</h5>
+                        {% if top_3_trivia.1.streak > 1 %}
+                            <h6 class="card-streak">Streak: {{ top_3_trivia.2.streak }}</h6>
+                        {% elif top_3_trivia.2.streak > 3 %}
+                            <h6 class="card-streak">Streak: {{ top_3_trivia.2.streak }} &#128293</h6>
+                        {% endif %}
+                    </div>
+                    <div class="footer-status">
+                        {% if top_3_trivia.2.trivia.allow_embed %}
+                            <span class="supported">Fully supported</span>
+                        {% else %}
+                            <span class="unsupported">Not supported</span>
+                        {% endif %}
+                        {% if not top_3_trivia.2.eligible_to_play %}
+                            <span class="played-status" id="playedStatus-{{ top_3_trivia.2.trivia.id }}">Already Played Today</span>
+                        {% endif %}
+                        <span class="played-status" id="playedStatus-{{ top_3_trivia.2.trivia.id }}"></span>
+                    </div>
+                </div>
+                <p class="card-text">{{ top_3_trivia.2.trivia.description|truncatewords:20 }}</p>
+            </div>
+        </div>
+
+    </div>
+    {% endif %}
+    {% else %}
+    <div class="welcomeHeader" id="header-greeting">
+        <h5>Your one-stop shop for all daily trivia games on the web.</h5>
+        
+        <h1 class="header-title"> Need your <span class="alt-font">Daily Dose of Trivia</span>?</h1>
+    </div>
+    <div class="welcomeText">
+        <br>
+        <h3>
+        Ever wish there were more daily trivia games like Wordle? 
+        <br>
+        <span class="bold">THERE IS!</span>
+        <br>
+        But, how would you know where to look? Daily Dose of Trivia collects all the best daily trivia
+        games on the web and displays them so you can find your favorites. Bookmark them, and play every
+        day to increase your streak!
+        </h3>   
+    </div>
+    <div class="welcomeRow">
+        <a href="{% url 'login' %}" class="login">Login</a>
+        <a href="{% url 'register' %}" class="login">Register</a>
+    </div>
+
+    {% endif %}
+</div>
+
+
+<div class="container mt-4">
+    <div class="row">
+        {% for item in trivia_data %}
+        {% with trivia=item.trivia %}
+        <div class="col-md-4 mb-4">
+            <div class="card trivia-card" data-link="{{ trivia.url }}" data-trivia-id="{{ trivia.id }}"
+            data-played="{% if not item.eligible_to_play %}true{% else %}false{% endif %}"
+            data-embed="{% if trivia.embed_code %}true{% else %}false{% endif %}">
+                <!-- Trivia Card -->
+                <div class="card-color" style="background-color: {{ trivia.color }};">
+                    <!-- Image in the center -->
+                    <img class="card-image" src="{{ trivia.image }}" alt="Trivia Image">
+    
+                    <!-- Bookmark button -->
+                    <button class="bookmark" data-trivia-id="{{ trivia.id }}">
+                        <svg viewBox="0 0 32 32">
+                            {% if trivia in request.user.bookmarks.all %}
+                                <path style="fill: red"; d="M8 4H24V28L16 24L8 28V4Z" />
+                            {% else %}
+                                <path d="M8 4H24V28L16 24L8 28V4Z" />
+                            {% endif %}
+                        </svg>
+                    </button>
+                </div>
+    
+                <!-- Footer -->
+                <div class="card-footer">
+                    <div class="footer-header">
+                        <div class="title-section">
+                            <div class="title-section">
+                                <h5 class="card-title">{{ trivia.title }}</h5>
+                                {% if user.is_authenticated %}
+                                    {% if item.streak == 1 or item.streak == 0 %}
+                                        <h6 class="card-streak"></h6>
+                                    {% elif item.streak == 2 %}
+                                        <h6 class="card-streak">Streak: {{ item.streak }}</h6>
+                                    {% else %}
+                                        <h6 class="card-streak">Streak: {{ item.streak }} &#128293;</h6>
+                                    {% endif %}
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="footer-status">
+                            {% if user.is_authenticated %}
+                                {% if trivia.allow_embed %}
+                                    <span class="supported">Fully supported</span>
+                                {% else %}
+                                    <span class="unsupported">Not supported</span>
+                                {% endif %}
+                                {% if not item.eligible_to_play %}
+                                <span class="played-status" id="playedStatus-{{ trivia.id }}">Already Played Today</span>
+                                {% endif %}
+                                <span class="played-status" id="playedStatus-{{ trivia.id }}"></span>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <p class="card-text">{{ trivia.description|truncatewords:20 }}</p>
+                </div>
+            </div>
+        </div>
+        {% endwith %}
+        {% endfor %}
+    </div>  
+</div>
+
+
+
+<div id="myModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <iframe id="modalIframe" width="100%" height="500px" style="border:none;"></iframe>
+    </div>
+</div>
+
+<div id="confirmationModal" class="modal">
+    <div class="modal-content" id="confirmation-content">
+        <h3>Did you play the game?</h3>
+        <label>
+            <input type="checkbox" name="playedCheckbox" id="playedCheckbox" checked> Yes
+        </label>
+
+        <h3>Did you win?</h3>
+        <label>
+            <input type="checkbox" name="wonCheckbox" id="wonCheckbox"> Yes
+        </label>
+        
+
+        <button id="confirmClose" class="btn btn-primary">Save</button>
+    </div>
+</div>
+
+<script src="{% static 'dailytrivia/js/bookmark.js' %}"></script>
+<script src="{% static 'dailytrivia/js/modal.js' %}"></script>
+{% endblock %}
