@@ -28,16 +28,15 @@
                 <div class="footer-header">
                     <div class="title-section">
                         <h5 class="card-title">{{ top_3_trivia.1.trivia.title }}</h5>
-                        {% if top_3_trivia.1.streak > 1 %}
+                        {% if top_3_trivia.1.streak == 1 or top_3_trivia.1.streak == 0 %}
+                            <h6 class="card-streak"></h6>
+                        {% elif top_3_trivia.1.streak == 2 %}
                             <h6 class="card-streak">Streak: {{ top_3_trivia.1.streak }}</h6>
+                        {% else %}
+                            <h6 class="card-streak">Streak: {{ top_3_trivia.1.streak }} &#128293;</h6>
                         {% endif %}
                     </div>
                     <div class="footer-status">
-                        {% if top_3_trivia.1.trivia.allow_embed %}
-                            <span class="supported">Fully supported</span>
-                        {% else %}
-                            <span class="unsupported">Not supported</span>
-                        {% endif %}
                         {% if not top_3_trivia.1.eligible_to_play %}
                             <span class="played-status" id="playedStatus-{{ top_3_trivia.1.trivia.id }}">Already Played Today</span>
                         {% endif %}
@@ -47,6 +46,7 @@
                 <p class="card-text">{{ top_3_trivia.1.trivia.description|truncatewords:20 }}</p>
             </div>
         </div>
+
 
         <div class="card big-card trivia-card" data-link="{{ top_3_trivia.0.trivia.url }}" data-trivia-id="{{ top_3_trivia.0.trivia.id }}"
         data-played="{% if not top_3_trivia.0.eligible_to_play %}true{% else %}false{% endif %}"
@@ -59,16 +59,11 @@
                 <div class="footer-header">
                     <div class="title-section">
                         <h5 class="card-title">{{ top_3_trivia.0.trivia.title }}</h5>
-                        {% if top_3_trivia.1.streak > 1 %}
+                        {% if top_3_trivia.0.streak > 1 %}
                             <h6 class="card-streak">Streak: {{ top_3_trivia.0.streak }}</h6>
                         {% endif %}
                     </div>
                     <div class="footer-status">
-                        {% if top_3_trivia.0.trivia.allow_embed %}
-                            <span class="supported">Fully supported</span>
-                        {% else %}
-                            <span class="unsupported">Not supported</span>
-                        {% endif %}
                         {% if not top_3_trivia.0.eligible_to_play %}
                             <span class="played-status" id="playedStatus-{{ top_3_trivia.0.trivia.id }}">Already Played Today</span>
                         {% endif %}
@@ -78,6 +73,7 @@
                 <p class="card-text">{{ top_3_trivia.0.trivia.description|truncatewords:20 }}</p>
             </div>
         </div>
+    
 
         <div class="card small-card trivia-card" data-link="{{ top_3_trivia.2.trivia.url }}" data-trivia-id="{{ top_3_trivia.2.trivia.id }}"
         data-played="{% if not top_3_trivia.2.eligible_to_play %}true{% else %}false{% endif %}"
@@ -90,22 +86,17 @@
                 <div class="footer-header">
                     <div class="title-section">
                         <h5 class="card-title">{{ top_3_trivia.2.trivia.title }}</h5>
-                        {% if top_3_trivia.1.streak > 1 %}
+                        {% if top_3_trivia.2.streak > 1 %}
                             <h6 class="card-streak">Streak: {{ top_3_trivia.2.streak }}</h6>
                         {% elif top_3_trivia.2.streak > 3 %}
                             <h6 class="card-streak">Streak: {{ top_3_trivia.2.streak }} &#128293</h6>
                         {% endif %}
                     </div>
                     <div class="footer-status">
-                        {% if top_3_trivia.2.trivia.allow_embed %}
-                            <span class="supported">Fully supported</span>
-                        {% else %}
-                            <span class="unsupported">Not supported</span>
-                        {% endif %}
                         {% if not top_3_trivia.2.eligible_to_play %}
                             <span class="played-status" id="playedStatus-{{ top_3_trivia.2.trivia.id }}">Already Played Today</span>
                         {% endif %}
-                        <span class="played-status" id="playedStatus-{{ top_3_trivia.2.trivia.id }}"></span>
+                            <span class="played-status" id="playedStatus-{{ top_3_trivia.2.trivia.id }}"></span>
                     </div>
                 </div>
                 <p class="card-text">{{ top_3_trivia.2.trivia.description|truncatewords:20 }}</p>
@@ -146,11 +137,13 @@
         {% for item in trivia_data %}
         {% with trivia=item.trivia %}
         <div class="col-md-4 mb-4">
-            <div class="card trivia-card" data-link="{{ trivia.url }}" data-trivia-id="{{ trivia.id }}"
-            data-played="{% if not item.eligible_to_play %}true{% else %}false{% endif %}"
-            data-embed="{% if trivia.embed_code %}true{% else %}false{% endif %}">
+            <div class="card trivia-card">
                 <!-- Trivia Card -->
-                <div class="card-color" style="background-color: {{ trivia.color }};">
+                <div class="card-color" 
+                data-link="{{ trivia.url }}" data-trivia-id="{{ trivia.id }}"
+                data-played="{% if not item.eligible_to_play %}true{% else %}false{% endif %}"
+                data-embed="{% if trivia.embed_code %}true{% else %}false{% endif %}"
+                style="background-color: {{ trivia.color }};">
                     <!-- Image in the center -->
                     <img class="card-image" src="{{ trivia.image }}" alt="Trivia Image">
     
@@ -185,17 +178,39 @@
                         </div>
                         <div class="footer-status">
                             {% if user.is_authenticated %}
-                                {% if trivia.allow_embed %}
-                                    <span class="supported">Fully supported</span>
-                                {% else %}
-                                    <span class="unsupported">Not supported</span>
-                                {% endif %}
-                                {% if not item.eligible_to_play %}
-                                <span class="played-status" id="playedStatus-{{ trivia.id }}">Already Played Today</span>
-                                {% endif %}
-                                <span class="played-status" id="playedStatus-{{ trivia.id }}"></span>
+                                <div class="checkbox-container">
+                                    <span>Played</span>
+
+                                    <div class="round">
+                                        <input 
+                                            type="checkbox" 
+                                            name="playedCheckbox" 
+                                            id="playedCheckbox-{{ trivia.id }}" 
+                                            data-played="{% if not item.eligible_to_play %}true{% else %}false{% endif %}"
+                                            {% if not item.eligible_to_play %}checked{% endif %}
+                                            onchange="handleCheckboxChange({{ trivia.id }}, 'played')"
+                                        />
+                                        <label for="playedCheckbox-{{ trivia.id }}"></label>
+                                    </div>
+                                </div>
+                                <div class="checkbox-container">
+                                    <span>Won</span>
+
+                                    <div class="round">
+                                        <input 
+                                            type="checkbox" 
+                                            name="wonCheckbox" 
+                                            id="wonCheckbox-{{ trivia.id }}"
+                                            {% if item.has_won %}checked{% endif %}
+                                            onchange="handleCheckboxChange({{ trivia.id }}, 'won')"
+                                        />
+                                        <label for="wonCheckbox-{{ trivia.id }}"></label>
+                                    </div>
+                                </div>
+                            {% else %}
+                                <span>Please log in to track your game progress.</span>
                             {% endif %}
-                        </div>
+                        </div>                        
                     </div>
                     <p class="card-text">{{ trivia.description|truncatewords:20 }}</p>
                 </div>
@@ -233,5 +248,5 @@
 </div>
 
 <script src="{% static 'dailytrivia/js/bookmark.js' %}"></script>
-<script src="{% static 'dailytrivia/js/modal.js' %}"></script>
+<script src="{% static 'dailytrivia/js/checkbox.js' %}"></script>
 {% endblock %}

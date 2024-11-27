@@ -183,3 +183,156 @@ Traceback (most recent call last):
 SystemExit: 1
 [2024-11-22 01:31:37 +0000] [439847] [INFO] Worker exiting (pid: 439847)
 [2024-11-21 19:31:37 -0600] [441510] [INFO] Booting worker with pid: 441510
+[2024-11-22 14:32:19 -0600] [439845] [CRITICAL] WORKER TIMEOUT (pid:439848)
+[2024-11-22 20:32:19 +0000] [439848] [ERROR] Error handling request (no URI read)
+Traceback (most recent call last):
+  File "/home/josh/.local/lib/python3.10/site-packages/gunicorn/workers/sync.py", line 133, in handle
+    req = next(parser)
+  File "/home/josh/.local/lib/python3.10/site-packages/gunicorn/http/parser.py", line 41, in __next__
+    self.mesg = self.mesg_class(self.cfg, self.unreader, self.source_addr, self.req_count)
+  File "/home/josh/.local/lib/python3.10/site-packages/gunicorn/http/message.py", line 259, in __init__
+    super().__init__(cfg, unreader, peer_addr)
+  File "/home/josh/.local/lib/python3.10/site-packages/gunicorn/http/message.py", line 60, in __init__
+    unused = self.parse(self.unreader)
+  File "/home/josh/.local/lib/python3.10/site-packages/gunicorn/http/message.py", line 271, in parse
+    self.get_data(unreader, buf, stop=True)
+  File "/home/josh/.local/lib/python3.10/site-packages/gunicorn/http/message.py", line 262, in get_data
+    data = unreader.read()
+  File "/home/josh/.local/lib/python3.10/site-packages/gunicorn/http/unreader.py", line 36, in read
+    d = self.chunk()
+  File "/home/josh/.local/lib/python3.10/site-packages/gunicorn/http/unreader.py", line 63, in chunk
+    return self.sock.recv(self.mxchunk)
+  File "/home/josh/.local/lib/python3.10/site-packages/gunicorn/workers/base.py", line 204, in handle_abort
+    sys.exit(1)
+SystemExit: 1
+[2024-11-22 20:32:20 +0000] [439848] [INFO] Worker exiting (pid: 439848)
+[2024-11-22 14:32:20 -0600] [476596] [INFO] Booting worker with pid: 476596
+[2024-11-22 18:18:38 -0600] [439845] [INFO] Handling signal: int
+[2024-11-23 00:18:38 +0000] [476596] [INFO] Worker exiting (pid: 476596)
+[2024-11-23 00:18:38 +0000] [439846] [INFO] Worker exiting (pid: 439846)
+[2024-11-23 00:18:38 +0000] [441510] [INFO] Worker exiting (pid: 441510)
+[2024-11-22 18:18:38 -0600] [439845] [INFO] Shutting down: Master
+[2024-11-22 18:18:40 -0600] [487592] [INFO] Starting gunicorn 23.0.0
+[2024-11-22 18:18:40 -0600] [487592] [INFO] Listening at: http://0.0.0.0:8000 (487592)
+[2024-11-22 18:18:40 -0600] [487592] [INFO] Using worker: sync
+[2024-11-22 18:18:40 -0600] [487593] [INFO] Booting worker with pid: 487593
+[2024-11-22 18:18:40 -0600] [487594] [INFO] Booting worker with pid: 487594
+[2024-11-22 18:18:40 -0600] [487595] [INFO] Booting worker with pid: 487595
+[2024-11-22 19:49:41 -0600] [487592] [CRITICAL] WORKER TIMEOUT (pid:487593)
+[2024-11-23 01:49:41 +0000] [487593] [ERROR] Error handling request (no URI read)
+Traceback (most recent call last):
+  File "/home/josh/.local/lib/python3.10/site-packages/gunicorn/workers/sync.py", line 133, in handle
+    req = next(parser)
+  File "/home/josh/.local/lib/python3.10/site-packages/gunicorn/http/parser.py", line 41, in __next__
+    self.mesg = self.mesg_class(self.cfg, self.unreader, self.source_addr, self.req_count)
+  File "/home/josh/.local/lib/python3.10/site-packages/gunicorn/http/message.py", line 259, in __init__
+    super().__init__(cfg, unreader, peer_addr)
+  File "/home/josh/.local/lib/python3.10/site-packages/gunicorn/http/message.py", line 60, in __init__
+    unused = self.parse(self.unreader)
+  File "/home/josh/.local/lib/python3.10/site-packages/gunicorn/http/message.py", line 274, in parse
+    line, rbuf = self.read_line(unreader, buf, self.limit_request_line)
+  File "/home/josh/.local/lib/python3.10/site-packages/gunicorn/http/message.py", line 326, in read_line
+    self.get_data(unreader, buf)
+  File "/home/josh/.local/lib/python3.10/site-packages/gunicorn/http/message.py", line 262, in get_data
+    data = unreader.read()
+  File "/home/josh/.local/lib/python3.10/site-packages/gunicorn/http/unreader.py", line 36, in read
+    d = self.chunk()
+  File "/home/josh/.local/lib/python3.10/site-packages/gunicorn/http/unreader.py", line 63, in chunk
+    return self.sock.recv(self.mxchunk)
+  File "/home/josh/.local/lib/python3.10/site-packages/gunicorn/workers/base.py", line 204, in handle_abort
+    sys.exit(1)
+SystemExit: 1
+[2024-11-23 01:49:41 +0000] [487593] [INFO] Worker exiting (pid: 487593)
+[2024-11-22 19:49:41 -0600] [491936] [INFO] Booting worker with pid: 491936
+[2024-11-23 08:56:02 -0600] [487592] [CRITICAL] WORKER TIMEOUT (pid:491936)
+[2024-11-23 14:56:02 +0000] [491936] [ERROR] Error handling request (no URI read)
+Traceback (most recent call last):
+  File "/home/josh/.local/lib/python3.10/site-packages/gunicorn/workers/sync.py", line 133, in handle
+    req = next(parser)
+  File "/home/josh/.local/lib/python3.10/site-packages/gunicorn/http/parser.py", line 41, in __next__
+    self.mesg = self.mesg_class(self.cfg, self.unreader, self.source_addr, self.req_count)
+  File "/home/josh/.local/lib/python3.10/site-packages/gunicorn/http/message.py", line 259, in __init__
+    super().__init__(cfg, unreader, peer_addr)
+  File "/home/josh/.local/lib/python3.10/site-packages/gunicorn/http/message.py", line 60, in __init__
+    unused = self.parse(self.unreader)
+  File "/home/josh/.local/lib/python3.10/site-packages/gunicorn/http/message.py", line 274, in parse
+    line, rbuf = self.read_line(unreader, buf, self.limit_request_line)
+  File "/home/josh/.local/lib/python3.10/site-packages/gunicorn/http/message.py", line 326, in read_line
+    self.get_data(unreader, buf)
+  File "/home/josh/.local/lib/python3.10/site-packages/gunicorn/http/message.py", line 262, in get_data
+    data = unreader.read()
+  File "/home/josh/.local/lib/python3.10/site-packages/gunicorn/http/unreader.py", line 36, in read
+    d = self.chunk()
+  File "/home/josh/.local/lib/python3.10/site-packages/gunicorn/http/unreader.py", line 63, in chunk
+    return self.sock.recv(self.mxchunk)
+  File "/home/josh/.local/lib/python3.10/site-packages/gunicorn/workers/base.py", line 204, in handle_abort
+    sys.exit(1)
+SystemExit: 1
+[2024-11-23 14:56:02 +0000] [491936] [INFO] Worker exiting (pid: 491936)
+[2024-11-23 08:56:03 -0600] [515091] [INFO] Booting worker with pid: 515091
+[2024-11-23 09:03:03 -0600] [487592] [CRITICAL] WORKER TIMEOUT (pid:487595)
+[2024-11-23 15:03:03 +0000] [487595] [ERROR] Error handling request (no URI read)
+Traceback (most recent call last):
+  File "/home/josh/.local/lib/python3.10/site-packages/gunicorn/workers/sync.py", line 133, in handle
+    req = next(parser)
+  File "/home/josh/.local/lib/python3.10/site-packages/gunicorn/http/parser.py", line 41, in __next__
+    self.mesg = self.mesg_class(self.cfg, self.unreader, self.source_addr, self.req_count)
+  File "/home/josh/.local/lib/python3.10/site-packages/gunicorn/http/message.py", line 259, in __init__
+    super().__init__(cfg, unreader, peer_addr)
+  File "/home/josh/.local/lib/python3.10/site-packages/gunicorn/http/message.py", line 60, in __init__
+    unused = self.parse(self.unreader)
+  File "/home/josh/.local/lib/python3.10/site-packages/gunicorn/http/message.py", line 274, in parse
+    line, rbuf = self.read_line(unreader, buf, self.limit_request_line)
+  File "/home/josh/.local/lib/python3.10/site-packages/gunicorn/http/message.py", line 326, in read_line
+    self.get_data(unreader, buf)
+  File "/home/josh/.local/lib/python3.10/site-packages/gunicorn/http/message.py", line 262, in get_data
+    data = unreader.read()
+  File "/home/josh/.local/lib/python3.10/site-packages/gunicorn/http/unreader.py", line 36, in read
+    d = self.chunk()
+  File "/home/josh/.local/lib/python3.10/site-packages/gunicorn/http/unreader.py", line 63, in chunk
+    return self.sock.recv(self.mxchunk)
+  File "/home/josh/.local/lib/python3.10/site-packages/gunicorn/workers/base.py", line 204, in handle_abort
+    sys.exit(1)
+SystemExit: 1
+[2024-11-23 15:03:03 +0000] [487595] [INFO] Worker exiting (pid: 487595)
+[2024-11-23 09:03:03 -0600] [515749] [INFO] Booting worker with pid: 515749
+[2024-11-24 23:58:05 +0000] [515749] [WARNING] Invalid request from ip=162.142.125.222: Invalid HTTP Version: (2, 0)
+[2024-11-25 03:24:11 +0000] [487594] [WARNING] Invalid request from ip=45.79.193.132: Invalid HTTP request line: ''
+[2024-11-26 00:10:31 +0000] [487594] [WARNING] Invalid request from ip=167.94.138.160: Invalid HTTP Version: (2, 0)
+[2024-11-26 05:05:11 +0000] [515091] [WARNING] Invalid request from ip=147.45.112.101: Invalid HTTP request line: '\x03\x00\x00/*à\x00\x00\x00\x00\x00Cookie: mstshash=Administr'
+[2024-11-26 04:20:58 -0600] [487592] [CRITICAL] WORKER TIMEOUT (pid:515749)
+[2024-11-26 10:20:58 +0000] [515749] [ERROR] Error handling request (no URI read)
+Traceback (most recent call last):
+  File "/home/josh/.local/lib/python3.10/site-packages/gunicorn/workers/sync.py", line 133, in handle
+    req = next(parser)
+  File "/home/josh/.local/lib/python3.10/site-packages/gunicorn/http/parser.py", line 41, in __next__
+    self.mesg = self.mesg_class(self.cfg, self.unreader, self.source_addr, self.req_count)
+  File "/home/josh/.local/lib/python3.10/site-packages/gunicorn/http/message.py", line 259, in __init__
+    super().__init__(cfg, unreader, peer_addr)
+  File "/home/josh/.local/lib/python3.10/site-packages/gunicorn/http/message.py", line 60, in __init__
+    unused = self.parse(self.unreader)
+  File "/home/josh/.local/lib/python3.10/site-packages/gunicorn/http/message.py", line 271, in parse
+    self.get_data(unreader, buf, stop=True)
+  File "/home/josh/.local/lib/python3.10/site-packages/gunicorn/http/message.py", line 262, in get_data
+    data = unreader.read()
+  File "/home/josh/.local/lib/python3.10/site-packages/gunicorn/http/unreader.py", line 36, in read
+    d = self.chunk()
+  File "/home/josh/.local/lib/python3.10/site-packages/gunicorn/http/unreader.py", line 63, in chunk
+    return self.sock.recv(self.mxchunk)
+  File "/home/josh/.local/lib/python3.10/site-packages/gunicorn/workers/base.py", line 204, in handle_abort
+    sys.exit(1)
+SystemExit: 1
+[2024-11-26 10:20:58 +0000] [515749] [INFO] Worker exiting (pid: 515749)
+[2024-11-26 04:20:59 -0600] [634679] [INFO] Booting worker with pid: 634679
+[2024-11-26 13:51:29 +0000] [634679] [WARNING] Invalid request from ip=127.0.0.1: Request Line is too large (7744 > 4094)
+[2024-11-27 15:21:36 -0600] [487592] [INFO] Handling signal: int
+[2024-11-27 21:21:36 +0000] [515091] [INFO] Worker exiting (pid: 515091)
+[2024-11-27 21:21:36 +0000] [634679] [INFO] Worker exiting (pid: 634679)
+[2024-11-27 21:21:36 +0000] [487594] [INFO] Worker exiting (pid: 487594)
+[2024-11-27 15:21:37 -0600] [487592] [INFO] Shutting down: Master
+[2024-11-27 15:21:40 -0600] [704232] [INFO] Starting gunicorn 23.0.0
+[2024-11-27 15:21:40 -0600] [704232] [INFO] Listening at: http://0.0.0.0:8000 (704232)
+[2024-11-27 15:21:40 -0600] [704232] [INFO] Using worker: sync
+[2024-11-27 15:21:40 -0600] [704233] [INFO] Booting worker with pid: 704233
+[2024-11-27 15:21:41 -0600] [704234] [INFO] Booting worker with pid: 704234
+[2024-11-27 15:21:41 -0600] [704235] [INFO] Booting worker with pid: 704235

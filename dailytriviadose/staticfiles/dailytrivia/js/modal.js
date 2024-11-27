@@ -11,6 +11,32 @@ document.addEventListener('DOMContentLoaded', function() {
     var alreadyPlayedToday = false;
 
 
+//     // Function to handle checkbox changes
+//     function handleCheckboxChange(triviaID, type) {
+//     // Identify the checkbox
+//     const checkbox = document.getElementById(`${type}Checkbox-${triviaID}`);
+//     const status = checkbox.checked; // Get the current state of the checkbox
+
+//     // Send data to the server
+//     fetch(`/create_or_update_trivia_record/${triviaID}/`, {
+//         method: 'POST',
+//         headers: {
+//             'Content-Type': 'application/x-www-form-urlencoded',
+//             'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+//         },
+//         body: `${type}=${status}` // Send either "played" or "won" with its current state
+//     })
+//     .then(response => response.json())
+//     .then(data => {
+//         if (data.success) {
+//             console.log(`${type.charAt(0).toUpperCase() + type.slice(1)} status updated successfully for Trivia ID ${triviaID}.`);
+//         } else {
+//             console.error(`Failed to update ${type} status: ${data.message}`);
+//         }
+//     })
+//     .catch(error => console.error('Error:', error));
+// }
+
     
     // Function to open modal with specific link
     function openModalWithLink(link, triviaID, hasPlayedToday) {
@@ -22,7 +48,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Attach click event to each button with the class
-    document.querySelectorAll('.card').forEach(function(card) {
+    document.querySelectorAll('.card-color').forEach(function(card) {
         card.onclick = function() {
             var link = card.getAttribute('data-link');
             var triviaID = card.getAttribute('data-trivia-id')
@@ -32,8 +58,12 @@ document.addEventListener('DOMContentLoaded', function() {
             currentTriviaID = triviaID;
             alreadyPlayedToday = hasPlayedToday;
 
+            if (hasPlayedToday) {
+                return;
+            }
+
             if (embed) {
-                openModalWithLink(link, triviaID, hasPlayedToday)
+                openModalWithLink(link, triviaID, hasPlayedToday);
             }
             else {
                 window.open(link, '_blank');
@@ -121,6 +151,7 @@ document.addEventListener('DOMContentLoaded', function() {
         })
         .then(data => {
             if (data.success){
+                alreadyPlayedToday = true;
                 updatePlayedStatus(currentTriviaID)
                 if (data.created){
                     console.log('New TGR created and updated.')
