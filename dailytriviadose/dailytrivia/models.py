@@ -41,6 +41,18 @@ class Trivia(models.Model):
         record, created = TriviaGameRecord.objects.get_or_create(user=user, trivia=self)
         return record.has_reset_occurred()
     
+    def eligible_to_win(self, user):
+        if isinstance(user, AnonymousUser):
+            return False
+        record, created = TriviaGameRecord.objects.get_or_create(user=user, trivia=self)
+        return record.has_win_occurred()
+    
+    def has_won(self, user):
+        if isinstance(user, AnonymousUser):
+            return False
+        record, created = TriviaGameRecord.objects.get_or_create(user=user, trivia=self)
+        return record.has_win_occurred()
+    
     def attempt_count(self):
         return TriviaGameRecord.objects.filter(trivia=self).count()
         
@@ -59,18 +71,39 @@ class TriviaGameRecord(models.Model):
         return f"{self.user.username} played {self.trivia.title}"
 
     def has_reset_occurred(self):
-        now = timezone.now()
+        now = timezone.localtime()
+
+
         reset_time_today = datetime.combine(now.date(), self.trivia.reset_time)
-        
-        # Convert to timezone-aware if necessary
-        if timezone.is_aware(now):
-            reset_time_today = timezone.make_aware(reset_time_today)
+
+        if not timezone.is_aware(reset_time_today):
+            reset_time_today = timezone.make_aware(reset_time_today, timezone=now.tzinfo)
 
         # If last_attempt_datetime is None, it's the first attempt
         if not self.last_attempt_datetime:
             return True  # Eligible for a new attempt
+        
+        last_attempt_datetime = timezone.localtime(self.last_attempt_datetime)
 
-        return self.last_attempt_datetime < reset_time_today
+        return last_attempt_datetime < reset_time_today
+    
+    def has_win_occurred(self):
+        now = timezone.localtime()
+
+        reset_time_today = datetime.combine(now.date(), self.trivia.reset_time)
+
+        if not timezone.is_aware(reset_time_today):
+            reset_time_today = timezone.make_aware(reset_time_today, timezone=now.tzinfo)
+
+        # If last_attempt_datetime is None, it's the first attempt
+        if not self.last_win_datetime:
+            return False  # Eligible for a new attempt
+        
+        last_win_datetime = timezone.localtime(self.last_win_datetime)
+
+        return last_win_datetime > reset_time_today
+
+
     
     def attempt(self):
         if self.has_reset_occurred():
@@ -84,7 +117,7 @@ class TriviaGameRecord(models.Model):
     def win(self):
         if self.has_reset_occurred():
             self.wins += 1
-            self.last_attempt_datetime = timezone.now
+            self.last_win_datetime = timezone.now
             self.save()
 
     class Meta:

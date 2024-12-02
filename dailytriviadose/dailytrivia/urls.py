@@ -10,8 +10,8 @@ urlpatterns = [
     path('toggle_bookmark/<int:trivia_id>/', views.toggle_bookmark, name='toggle_bookmark'),
     path('bookmarked/', views.index, name='bookmarked'),
     path('add_trivia/', views.add_trivia, name="add_trivia"),
-    path('record_trivia_result/', views.record_trivia_result, name='record_trivia_result'),
+    # path('record_trivia_result/', views.record_trivia_result, name='record_trivia_result'),
     path('create_or_update_trivia_record/<int:trivia_id>/', views.create_or_update_trivia_record, name='create_or_update_trivia_record'),
+    path('delete_trivia_attempt/<int:trivia_id>/', views.delete_trivia_attempt, name='delete_trivia_attempt'),
     path('dailytrivia/profile/<str:username>', views.profile, name='profile'),
-
 ]

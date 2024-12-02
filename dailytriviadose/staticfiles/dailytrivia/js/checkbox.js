@@ -2,24 +2,38 @@ document.addEventListener('DOMContentLoaded', function () {
     // Attach click event to each card-color div
     document.querySelectorAll('.card-color').forEach(function (card) {
         card.onclick = function () {
-            var link = card.getAttribute('data-link');
-            var triviaID = card.getAttribute('data-trivia-id');
-            var hasPlayedToday = card.getAttribute('data-played') === 'true';
+            let link = card.getAttribute('data-link');
+            let triviaID = card.getAttribute('data-trivia-id');
+            let hasPlayedToday = card.getAttribute('data-played') === 'true';
 
+            console.log('link: ', link)
+
+            if (!link){
+                console.log('getting parent element')
+                link = card.parentElement.getAttribute('data-link');
+                triviaID = card.parentElement.getAttribute('data-trivia-id');
+                hasPlayedToday = card.parentElement.getAttribute('data-played') === 'true';
+            }
             // Open the link in a new tab
             window.open(link, '_blank');
-
             // Automatically mark the "played" checkbox as checked
             if (!hasPlayedToday) {
-                const playedCheckbox = document.getElementById(`playedCheckbox-${triviaID}`);
+                let playedCheckbox = document.getElementById(`playedCheckbox-${triviaID}`);
+                console.log('checkbox: ', playedCheckbox);
+                console.log('triviaID: ', triviaID)
+                if (!playedCheckbox) {
+                playedCheckbox = document.querySelector(`#playedCheckbox-${triviaID}`);
+                console.log('checkbox: ', playedCheckbox);
+                }
                 playedCheckbox.checked = true;
 
                 // Show the 'won' checkbox when 'played' is checked
-                toggleWonCheckboxVisibility(triviaID, true)
+                toggleWonCheckboxVisibility(triviaID, true);
 
                 // Send "played" status to the server
                 handleCheckboxChange(triviaID, 'played', true);
             }
+
         };
     });
 
@@ -104,8 +118,12 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     document.querySelectorAll('input[type="checkbox"][name="playedCheckbox"]').forEach(function (checkbox) {
+        if (checkbox){
         const triviaID = checkbox.id.split('-')[1];
-        const wonCheckboxContainer = checkbox.closest('.checkbox-container').nextElementSibling;
+        const wonCheckboxContainer = checkbox.closest('.checkbox-container')?.nextElementSibling;
+        if (wonCheckboxContainer) {
         toggleWonCheckboxVisibility(triviaID, checkbox.checked)
+        }
+    }
     })
 });

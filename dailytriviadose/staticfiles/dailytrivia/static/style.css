@@ -420,6 +420,33 @@ html {
 }
 
 @media (max-width: 1000px) {
+    .navbar-nav{
+        flex-direction: row;
+    }
+    .mr-auto{
+        flex-direction: row;
+    }
+    .footer-status{
+        gap: 2rem;
+    }
+    .footer-status span{
+        margin-right: 1rem;
+    }
+    .round{
+        transform: scale(2.5);
+    }
+    .row{
+        justify-content: center;
+    }
+    .col-md-4{
+        flex: 0 0 80%;
+        max-width: 80%;
+    }
+    .mb-4{
+        flex: 0 0 80%;
+        max-width: 80%;
+
+    }
     .modal-content{
         top: 0px;
         width: 90%;

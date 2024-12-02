@@ -18,8 +18,7 @@
     {% if top_3_trivia %}
     <div class="welcomeRow">
         <div class="card small-card trivia-card" data-link="{{ top_3_trivia.1.trivia.url }}" data-trivia-id="{{ top_3_trivia.1.trivia.id }}"
-        data-played="{% if not top_3_trivia.1.eligible_to_play %}true{% else %}false{% endif %}"
-        data-embed="{% if top_3_trivia.1.trivia.embed_code %}true{% else %}false{% endif %}">
+        data-played="{% if not top_3_trivia.1.eligible_to_play %}true{% else %}false{% endif %}">
             <!-- Header -->
             <div class="card-color" style="background-color: {{ top_3_trivia.1.trivia.color }};">
                 <img class="card-image" src="{{ top_3_trivia.1.trivia.image }}" alt="Trivia Image">
