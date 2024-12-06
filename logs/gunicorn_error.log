@@ -525,3 +525,14 @@ SystemExit: 1
 [2024-12-05 22:51:34 -0600] [1054198] [INFO] Booting worker with pid: 1054198
 [2024-12-05 22:51:34 -0600] [1054199] [INFO] Booting worker with pid: 1054199
 [2024-12-05 22:51:34 -0600] [1054200] [INFO] Booting worker with pid: 1054200
+[2024-12-05 23:08:53 -0600] [1054197] [INFO] Handling signal: int
+[2024-12-06 05:08:53 +0000] [1054200] [INFO] Worker exiting (pid: 1054200)
+[2024-12-06 05:08:53 +0000] [1054199] [INFO] Worker exiting (pid: 1054199)
+[2024-12-06 05:08:53 +0000] [1054198] [INFO] Worker exiting (pid: 1054198)
+[2024-12-05 23:08:54 -0600] [1054197] [INFO] Shutting down: Master
+[2024-12-05 23:11:20 -0600] [1056605] [INFO] Starting gunicorn 23.0.0
+[2024-12-05 23:11:20 -0600] [1056605] [INFO] Listening at: http://0.0.0.0:8000 (1056605)
+[2024-12-05 23:11:20 -0600] [1056605] [INFO] Using worker: sync
+[2024-12-05 23:11:20 -0600] [1056606] [INFO] Booting worker with pid: 1056606
+[2024-12-05 23:11:20 -0600] [1056607] [INFO] Booting worker with pid: 1056607
+[2024-12-05 23:11:20 -0600] [1056608] [INFO] Booting worker with pid: 1056608
