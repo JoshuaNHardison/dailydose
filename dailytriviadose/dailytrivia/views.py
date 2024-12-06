@@ -8,6 +8,7 @@ from django.db import IntegrityError
 from django.utils import timezone 
 from datetime import timedelta
 import json
+import pytz
 
 
 from django.views.decorators.clickjacking import xframe_options_exempt
@@ -47,6 +48,17 @@ def index(request):
         'top_3_trivia': top_3_trivia,
         })
 
+
+@login_required
+def set_timezone(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        timezone = data.get('timezone', 'UTC')
+        if request.user.is_authenticated:
+            request.user.timezone = timezone
+            request.user.save()
+            return JsonResponse({'status': 'success'})
+    return JsonResponse({'status': 'error', 'message': 'Invalid request'}, status=400)
 
 def get_trivia_streak(user, trivia):
     trivia_dates, _ =UserTriviaDates.objects.get_or_create(user=user, trivia=trivia)
@@ -153,76 +165,82 @@ def create_or_update_trivia_record(request, trivia_id):
         trivia = get_object_or_404(Trivia, id=trivia_id)
         played = request.POST.get("played") == 'true'
         won = request.POST.get("won") == 'true'
-        type = request.POST.get('type')
+        action_type = request.POST.get('type')
 
+        user_timezone = pytz.timezone(user.timezone if hasattr(user, 'timezone') and user.timezone else 'UTC')
+        now = timezone.now().astimezone(user_timezone)
 
-        trivia_record, created = TriviaGameRecord.objects.get_or_create(
-            user=user,
-            trivia=trivia
-        )
-        if type == 'played':
+        trivia_record, created = TriviaGameRecord.objects.get_or_create(user=user, trivia=trivia)
+
+        if action_type == 'played':
             if trivia_record.has_reset_occurred():
                 trivia_record.attempts += 1
-                trivia_record.last_attempt_datetime = timezone.now()
+                trivia_record.last_attempt_datetime = now
                 trivia_dates, _ = UserTriviaDates.objects.get_or_create(user=user, trivia=trivia)
                 trivia_dates.add_attempt()
                 streak = trivia_dates.calculate_streak()
                 trivia_record.save()
                 return JsonResponse({'success': True, 'created': created, 'streak': streak})
-        elif type == 'won':
+
+        elif action_type == 'won':
             if not trivia_record.has_win_occurred():
                 trivia_record.wins += 1
-                trivia_record.last_win_datetime = timezone.now()
-                
+                trivia_record.last_win_datetime = now
                 trivia_record.save()
-            return JsonResponse({'success': True, 'created': created,})
+                return JsonResponse({'success': True, 'created': created})
         else:
             return JsonResponse({'success': False, 'message': 'You already played today.'}, status=400)
-    return JsonResponse({'success': False, 'message': 'Not a post request.'}, status=400)
 
+    return JsonResponse({'success': False, 'message': 'Not a POST request.'}, status=400)
 
 @login_required
 def delete_trivia_attempt(request, trivia_id):
     if request.method == 'POST':
         user = request.user
         trivia = get_object_or_404(Trivia, id=trivia_id)
+        action_type = request.POST.get('type')
 
-        type = request.POST.get('type')
-        if type not in ['played', 'won']:
-            return JsonResponse({'success': False, 'message': 'Type not found!'}, status=404)
-        
+        if action_type not in ['played', 'won']:
+            return JsonResponse({'success': False, 'message': 'Invalid type!'}, status=404)
+
+        user_timezone = pytz.timezone(user.timezone if hasattr(user, 'timezone') and user.timezone else 'UTC')
+
         try:
             trivia_record = TriviaGameRecord.objects.get(user=user, trivia=trivia)
         except TriviaGameRecord.DoesNotExist:
             return JsonResponse({'success': False, 'message': 'TriviaGameRecord not found.'}, status=404)
-        if type == 'played':
-            if not timezone.localtime(trivia_record.last_attempt_datetime).date() == timezone.localdate():
-                return JsonResponse({'success': False, 'message': 'Cannot delete an attempt not made today'}, status=400)
 
-            trivia_record.last_attempt_datetime = timezone.localtime(trivia_record.last_attempt_datetime) - timedelta(days=1)
+        if action_type == 'played':
+            last_attempt_date = trivia_record.last_attempt_datetime.astimezone(user_timezone).date()
+            if last_attempt_date != timezone.localdate().astimezone(user_timezone).date():
+                return JsonResponse({'success': False, 'message': 'Cannot delete an attempt not made today.'}, status=400)
+
+            trivia_record.last_attempt_datetime -= timedelta(days=1)
             trivia_record.attempts -= 1
             trivia_record.save()
-            
+
             try:
                 trivia_dates = UserTriviaDates.objects.get(user=user, trivia=trivia)
-                if timezone.datetime.fromisoformat(trivia_dates.play_dates[-1]).date() == timezone.localdate():
-                    trivia_dates.play_dates.pop()
-                    trivia_dates.save()
-                # if timezone.localdate() in trivia_dates.play_dates:
-                #     trivia_dates.play_dates.remove(timezone.localdate())
-                #     trivia_dates.save()
-            except:
+                if trivia_dates.play_dates:
+                    last_play_date = timezone.datetime.fromisoformat(trivia_dates.play_dates[-1]).astimezone(user_timezone).date()
+                    if last_play_date == last_attempt_date:
+                        trivia_dates.play_dates.pop()
+                        trivia_dates.save()
+            except UserTriviaDates.DoesNotExist:
                 return JsonResponse({'success': False, 'message': 'Cannot find trivia dates.'}, status=400)
-        elif type == 'won':
-            if not timezone.localtime(trivia_record.last_win_datetime).date() == timezone.localdate():
-                return JsonResponse({'success': False, 'message': 'Cannot delete a win not made today'}, status=400)
-            trivia_record.last_win_datetime = timezone.localtime(trivia_record.last_win_datetime) - timedelta(days=1)
+
+        elif action_type == 'won':
+            last_win_date = trivia_record.last_win_datetime.astimezone(user_timezone).date()
+            if last_win_date != timezone.localdate().astimezone(user_timezone).date():
+                return JsonResponse({'success': False, 'message': 'Cannot delete a win not made today.'}, status=400)
+
+            trivia_record.last_win_datetime -= timedelta(days=1)
             trivia_record.wins -= 1
             trivia_record.save()
-        return JsonResponse({'success': True, 'message': 'Attempt or win deleted successfully'})
-    
-    
-    return JsonResponse({'success': False, 'message': 'Not a post request'}, status=400)
+
+        return JsonResponse({'success': True, 'message': 'Attempt or win deleted successfully.'})
+
+    return JsonResponse({'success': False, 'message': 'Not a POST request.'}, status=400)
 
 
 @login_required

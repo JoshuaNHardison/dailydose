@@ -3,6 +3,29 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                const userTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    
+                // Check if the timezone is already set to avoid unnecessary calls
+                if (!document.cookie.includes(`timezone=${userTimezone}`)) {
+                    fetch('/set_timezone/', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRFToken': '{{ csrf_token }}'
+                        },
+                        body: JSON.stringify({ timezone: userTimezone })
+                    }).then(response => {
+                        if (response.ok) {
+                            console.log('Timezone updated successfully');
+                        }
+                    }).catch(error => {
+                        console.error('Error updating timezone:', error);
+                    });
+                }
+            });
+        </script>
         <title>{% block title %} Daily Dose of Trivia {% endblock %}</title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
         <link rel="preconnect" href="https://fonts.googleapis.com">

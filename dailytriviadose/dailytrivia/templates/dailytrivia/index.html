@@ -186,7 +186,7 @@
                                             name="playedCheckbox" 
                                             id="playedCheckbox-{{ trivia.id }}" 
                                             data-played="{% if not item.eligible_to_play %}true{% else %}false{% endif %}"
-                                            {% if not item.eligible_to_play %}checked{% endif %}
+                                            {% if item.eligible_to_play %}checked{% endif %}
                                             onchange="handleCheckboxChange({{ trivia.id }}, 'played')"
                                         />
                                         <label for="playedCheckbox-{{ trivia.id }}"></label>
@@ -194,7 +194,6 @@
                                 </div>
                                 <div class="checkbox-container">
                                     <span>Won</span>
-
                                     <div class="round">
                                         <input 
                                             type="checkbox" 

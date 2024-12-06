@@ -14,4 +14,5 @@ urlpatterns = [
     path('create_or_update_trivia_record/<int:trivia_id>/', views.create_or_update_trivia_record, name='create_or_update_trivia_record'),
     path('delete_trivia_attempt/<int:trivia_id>/', views.delete_trivia_attempt, name='delete_trivia_attempt'),
     path('dailytrivia/profile/<str:username>', views.profile, name='profile'),
+    path('set_timezone/', views.set_timezone, name='set_timezone'),
 ]
