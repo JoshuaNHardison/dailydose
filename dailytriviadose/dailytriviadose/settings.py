@@ -27,11 +27,9 @@ SECRET_KEY = 'django-insecure-^(o9*&o3!!1dl7h29p*ne4^c^@yck(3hdio&3bn*t&smt%+h3&
 DEBUG = True
 
 ALLOWED_HOSTS = [
-	'69.247.6.82',
 	'dailydosestrivia.com',
 	'www.dailydosestrivia.com',
 	'dailydosestrivia.duckdns.org',
-	'127.0.0.1',
 	]
 
 CSFRF_TRUSTED_ORIGINS = [
